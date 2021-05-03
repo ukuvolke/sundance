@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css" type="text/css">
-    <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
-    <title>Sundance</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="style.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/css/ol.css"
+    type="text/css">
+  <script src="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.5.0/build/ol.js"></script>
+  <title>Sundance</title>
 </head>
+
 <body>
-    
-    <h1>Suntime calculator</h1>
-    <div>
+  <div class="container">
+    <div class="container-item">
+      <h1>Suntime calculator</h1>
+      <div>
         <ul class="input">
           <li>Latitude: <input type="number" id="lat" value=""> N</li>
           <li>Longitude: <input type="number" id="long" value=""> E</li>
@@ -20,18 +24,24 @@
         </ul>
       </div>
       <div>
-          <button onclick="getData()">magic</button>
+        <button onclick="getData()">magic</button>
       </div>
-      <div>
+    </div>
+    
+      <div class= "container-item">
         <p id="sunrise"></p>
         <p id="sunset"></p>
         <p id="daylength"></p>
         <p id="disclaimer"></p>
       </div>
-      <div id="map" class="map"></div>
-     
+
+  </div>
+
+  <div id="map" class="map"></div>
+
 
 
 </body>
 <script type="text/javascript" src="app.js"></script>
+
 </html>

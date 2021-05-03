@@ -1,16 +1,16 @@
 
 function getData() {
-  // Request data for entered location (default: Winnersh, Berkshire, UK)
+  
   let lat = document.getElementById("lat").value;
   let long = document.getElementById("long").value;
   let date = document.getElementById("date").value;
 
 
   fetch(`https://api.sunrise-sunset.org/json?lat=${lat}&lng=${long}&date=${date}&formatted=0`, {
-    // nothing here
+
   }).then(response => response.json())
     .then(showData)
-  //  .catch(e => requestError(e, 'Error'));
+
 }
 
 
@@ -44,33 +44,56 @@ function showData(data) {
 
 }
 
-const localmap = new ol.Map({
-  layers: [
-    new ol.layer.Tile({
-      source: new ol.source.OSM()
+const myLocation = ol.proj.fromLonLat([22.50389, 58.24806]);
+const myGeometry = new ol.geom.Point(myLocation);
+
+
+const iconFeature = new ol.Feature({
+    geometry: myGeometry,
+    name: 'Kuressaare',
+});
+
+const map = new ol.Map({
+    target: 'map',
+    layers: [
+        new ol.layer.Tile({
+            source: new ol.source.OSM(),
+        }),
+        new ol.layer.Vector({
+            source: new ol.source.Vector({
+                features: [iconFeature]
+            }),
+            style: new ol.style.Style({
+                image: new ol.style.Icon({
+                    anchor: [0.5, 46],
+                    anchorXUnits: 'fraction',
+                    anchorYUnits: 'pixels',
+                    src: 'https://openlayers.org/en/latest/examples/data/icon.png'
+                })
+            })
+        })
+    ],
+    view: new ol.View({
+        center: myLocation,
+        zoom: 14
     })
-  ],
-  target: 'map',
-  view: new ol.View({
-    center: [0, 22],
-    zoom: 4
-  })
 });
-localmap.on('singleclick', function (evt) {
-
-  // convert coordinate to EPSG-4326
-  var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
-  var lon = lonlat[0];
-  var lat = lonlat[1];
-  var lonField = document.querySelector("#long");
-  var latField = document.querySelector("#lat");
-  lonField.value = lon;
-  latField.value = lat;
 
 
+map.on('singleclick', function(evt) {
 
+    // convert coordinate to EPSG-4326
+    var lonlat = ol.proj.transform(evt.coordinate, 'EPSG:3857', 'EPSG:4326');
+    var lon = lonlat[0];
+    var lat = lonlat[1];
+    var lonField = document.querySelector("#long");
+    var latField = document.querySelector("#lat");
+    lonField.value = lon;
+    latField.value = lat;
 
+    myGeometry.setCoordinates(evt.coordinate);
 });
+
 
 
 var options = {
